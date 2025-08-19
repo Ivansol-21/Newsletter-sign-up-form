@@ -28,7 +28,7 @@ class FormField extends HTMLElement {
 
     // Actualiza todo de una vez cuando se monta
     update() {
-        this.updateAttr('label', this.getAttribute('label') || 'Nombre');
+        this.updateAttr('label', this.getAttribute('label') || '');
         this.updateAttr('name', this.getAttribute('name') || 'nombre');
         this.updateAttr('type', this.getAttribute('type') || 'text');
         this.updateAttr('shape', this.getAttribute('shape') || '0');
@@ -47,6 +47,11 @@ class FormField extends HTMLElement {
                 break;
             case 'type':
                 this.$input.type = value;
+                if (this.$input.getAttribute('type') === 'email') {
+                    this.$input.setAttribute('placeholder', 'example@email.com');
+                } else {
+                    this.$input.removeAttribute('placeholder');
+                };
                 break;
             case 'shape':
                 this.$style.textContent = this.styles(parseInt(value));
@@ -78,7 +83,13 @@ class FormField extends HTMLElement {
             .form-field {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 0.125rem;
+                gap: 0.25rem;
+            }
+            .form-field input { 
+                inline-size: 100%;
+                border: 1px solid hsl(0, 0%,58%);
+                padding: 0.5em;
+                border-radius: 8px;
             }
             #error {
                 text-align: end;
@@ -87,17 +98,19 @@ class FormField extends HTMLElement {
         `;
         // Dependiendo del shape se aplican ciertos estilos
         return shape === 0
-            ? base + `.form-field label { flex: 1; } .form-field input { inline-size: 100%; } #error { flex: 1; }`
-            : base + `.form-field {flex-wrap: nowrap} #error { order: 3; }`;
+            ? base + `.form-field label { flex: 1; } .form-field input { inline-size: 100%;} #error { flex: 1; }`
+            : base + `.form-field {flex-wrap: nowrap; gap: 0.5rem;} #error { order: 3; }`;
     }
 
     validar() {
         const valor = this.$input.value.trim();
         if (this.hasAttribute('required') && !valor) {
             this.$error.textContent = `Valid ${this.$input.name} required`;
+            this.$input.style.border = 'solid 1px hsl(0, 100%, 74%)';
             return false;
         }
         this.$error.textContent = '';
+        this.$input.removeAttribute('style');
         return true;
     }
 
@@ -134,7 +147,7 @@ document.body.appendChild($formField); */
 /* $formField.setAttribute('label', 'Telefono');
 $formField.setAttribute('name', 'Telefono');
 $formField.setAttribute('type', 'number');
-$formField.setAttribute('shape', '0'); */
+$formField.setAttribute('shape', '1'); */
 
 
 // console.log($formField.getAttribute('label'))
