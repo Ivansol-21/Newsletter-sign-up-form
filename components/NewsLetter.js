@@ -98,6 +98,7 @@ class NewsLetter extends HTMLElement {
             }
             .newsletter__portada { 
                 border-radius: 16px;
+                overflow: hidden;
             }
             .newsletter__enviar {
                 inline-size: 100%;
@@ -108,6 +109,37 @@ class NewsLetter extends HTMLElement {
             }
 
         `;
+        let media = /* css */ `
+            @media (max-width: 768px) {
+                .newsletter {
+                    grid-template-columns: 1fr;
+                    grid-template-areas:
+                        "portada"
+                        "contenido";
+                    gap: 2rem;
+                }
+                .newsletter section {
+                    grid-area: contenido;
+                    padding: 0;
+                }
+                .newsletter__portada {
+                    grid-area: portada;
+                    border-radius: 24px;
+                }
+            }
+            @media (max-width: 425px) {
+                .newsletter {
+                    padding: 0;
+                    margin: 1rem;
+                }
+                .newsletter section {
+                    padding: 0 1.5rem 1.5rem;
+                }
+                .newsletter__enviar {
+                    padding: 1rem 0.5rem;
+                }
+            }
+        `
         // Verificamos si se ha definido algún estilo para el botón
         if (btnStyle) {
             base += `.newsletter__enviar { ${btnStyle} } `;
@@ -121,7 +153,7 @@ class NewsLetter extends HTMLElement {
             base += `.sp { ${sp} }`;
         }
         // retornamas la base con los estilos que se hayan agregando.
-        return base;
+        return base + media;
     };
 
     updateAttrInput(inputAtt) {

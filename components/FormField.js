@@ -85,6 +85,11 @@ class FormField extends HTMLElement {
                 flex-wrap: wrap;
                 gap: 0.5rem;
             }
+            .form-field label {
+                font-weight: 700;
+                font-size: 0.875rem;
+                color: hsl(234, 29%, 20%);
+            }
             .form-field input { 
                 inline-size: 100%;
                 border: 1px solid hsl(0, 0%,58%);
@@ -92,6 +97,7 @@ class FormField extends HTMLElement {
                 border-radius: 8px;
             }
             #error {
+                font-size: 0.75rem;
                 text-align: end;
                 color: hsl(0, 100%, 74%);
             }

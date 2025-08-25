@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 :root {
     --Blue-800: hsl(234, 29%, 20%);
     --Blue-700: hsl(235, 18%, 26%);
@@ -20,4 +22,5 @@
     min-block-size: 100dvh;
     background-color: var(--Blue-800);
     gap: 3rem;
+    font-family: roboto;
 }
