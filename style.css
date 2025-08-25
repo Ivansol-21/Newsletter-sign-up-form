@@ -1,0 +1,23 @@
+:root {
+    --Blue-800: hsl(234, 29%, 20%);
+    --Blue-700: hsl(235, 18%, 26%);
+    --Grey: hsl(0, 0%,58%);
+    --White: hsl(0, 0%, 100%);
+}
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+}
+#app {
+    display: grid;
+    grid-template-columns: 100dvw;
+    grid-template-rows: 100dvh auto auto 100dvh;
+    place-items: center;
+    min-block-size: 100dvh;
+    background-color: var(--Blue-800);
+    gap: 3rem;
+}

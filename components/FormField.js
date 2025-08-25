@@ -17,7 +17,7 @@ class FormField extends HTMLElement {
     }
 
     connectedCallback() {
-        this.update(); // Inicializa valores
+        this.update(); // Inicializa valores por defecto.
         this.$input.addEventListener('blur', () => this.validar()); //Validacion al perder el foco.
     }
 
@@ -28,8 +28,8 @@ class FormField extends HTMLElement {
 
     // Actualiza todo de una vez cuando se monta
     update() {
-        this.updateAttr('label', this.getAttribute('label') || '');
-        this.updateAttr('name', this.getAttribute('name') || 'nombre');
+        this.updateAttr('label', this.getAttribute('label') || 'Texto por defecto');
+        this.updateAttr('name', this.getAttribute('name') || 'texto');
         this.updateAttr('type', this.getAttribute('type') || 'text');
         this.updateAttr('shape', this.getAttribute('shape') || '0');
     }
@@ -83,12 +83,12 @@ class FormField extends HTMLElement {
             .form-field {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 0.25rem;
+                gap: 0.5rem;
             }
             .form-field input { 
                 inline-size: 100%;
                 border: 1px solid hsl(0, 0%,58%);
-                padding: 0.5em;
+                padding: 0.875em;
                 border-radius: 8px;
             }
             #error {
@@ -98,7 +98,7 @@ class FormField extends HTMLElement {
         `;
         // Dependiendo del shape se aplican ciertos estilos
         return shape === 0
-            ? base + `.form-field label { flex: 1; } .form-field input { inline-size: 100%;} #error { flex: 1; }`
+            ? base + `.form-field label { flex: 1; } #error { flex: 1; }`
             : base + `.form-field {flex-wrap: nowrap; gap: 0.5rem;} #error { order: 3; }`;
     }
 
@@ -107,6 +107,7 @@ class FormField extends HTMLElement {
         if (this.hasAttribute('required') && !valor) {
             this.$error.textContent = `Valid ${this.$input.name} required`;
             this.$input.style.border = 'solid 1px hsl(0, 100%, 74%)';
+            this.$input.style.backgroundColor = 'hsl(0, 100%, 95%)';
             return false;
         }
         this.$error.textContent = '';
