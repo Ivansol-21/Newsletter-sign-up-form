@@ -14,7 +14,7 @@ class NewsLetter extends HTMLElement {
         this.$portada = this.shadowRoot.querySelector('.newsletter__portada img');
         this.$formulario = this.shadowRoot.querySelector('.newsletter__form');
         this.$boton = this.shadowRoot.querySelector('.newsletter__enviar');
-        this.$style = this.shadowRoot.querySelector('style');
+        this.$dynamicStyle = this.shadowRoot.getElementById('dynamic-styles');
     };
 
     connectedCallback() {
@@ -43,30 +43,27 @@ class NewsLetter extends HTMLElement {
             case 'btn-label':
                 this.$boton.textContent = nV || 'Enviar';
                 break;
-            case 'btn-style':
-                this.$style.textContent = NewsLetter.styles(nV, this.getAttribute('btn::hover') || '', this.getAttribute('sp') || '');
-                break;
-            case 'btn::hover':
-                this.$style.textContent = NewsLetter.styles(this.getAttribute('btn-style') || '', nV, this.getAttribute('sp') || '');
-                break;
-            case 'sp':
-                this.$style.textContent = NewsLetter.styles(this.getAttribute('btn-style') || '', this.getAttribute('btn::hover') || '', nV);
-                break;
+        };
+        if (['btn-style', 'btn-hover', 'bg-style'].includes(name)) {
+            this.updateStyles();
         };
     };
 
     update() {
         this.$boton.textContent = this.getAttribute('btn-label') || 'Enviar';
         this.$portada.alt = 'Portada del componente';
-        this.$style.textContent = NewsLetter.styles(
-            this.getAttribute('btn-style') || '', 
-            this.getAttribute('btn::hover') || '',
-            this.getAttribute('sp') || ''
-        );
+        this.updateStyles();
     };
 
-    static styles(btnStyle, btnHover, sp) {
-        let base = /* css */ `
+    updateStyles() {
+        this.$dynamicStyle.textContent = NewsLetter.dynamicStyles(
+            this.getAttribute('btn-style') || '', 
+            this.getAttribute('btn-hover') || '',
+            this.getAttribute('bg-style') || ''
+        );
+    };
+    static baseStyles() {
+        return /* css */ `
             *,
             *::before,
             *::after {
@@ -107,9 +104,6 @@ class NewsLetter extends HTMLElement {
                 border: none;
                 border-radius: 8px;
             }
-
-        `;
-        let media = /* css */ `
             @media (max-width: 768px) {
                 .newsletter {
                     grid-template-columns: 1fr;
@@ -140,20 +134,17 @@ class NewsLetter extends HTMLElement {
                 }
             }
         `
+    }
+    static dynamicStyles(btnStyle, btnHover, sp) {
+        let css = '';
         // Verificamos si se ha definido algún estilo para el botón
-        if (btnStyle) {
-            base += `.newsletter__enviar { ${btnStyle} } `;
-        };
+        if (btnStyle) css += `.newsletter__enviar { ${btnStyle} } `;
         // Si se define el estilo para el hover
-        if(btnHover) {
-            base += `.newsletter__enviar:hover { ${btnHover} }`;
-        };
+        if(btnHover) css += `.newsletter__enviar:hover { ${btnHover} }`;
         // Si se define el estilo para el fondo
-        if(sp) {
-            base += `.sp { ${sp} }`;
-        }
-        // retornamas la base con los estilos que se hayan agregando.
-        return base + media;
+        if(sp) css += `.sp { ${sp} }`;
+        // retornamas la css con los estilos que se hayan agregando.
+        return css;
     };
 
     updateAttrInput(inputAtt) {
@@ -197,7 +188,8 @@ class NewsLetter extends HTMLElement {
 NewsLetter.template = document.createElement('template');
 
 NewsLetter.template.innerHTML = /* html */ `
-    <style></style>
+    <style>${NewsLetter.baseStyles()}</style>
+    <style id="dynamic-styles"></style>
     <article class="newsletter sp">
         <section>
             <slot name="contenido"></slot>
