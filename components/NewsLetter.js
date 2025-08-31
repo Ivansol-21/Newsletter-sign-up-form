@@ -44,7 +44,7 @@ class NewsLetter extends HTMLElement {
                 this.$boton.textContent = nV || 'Enviar';
                 break;
         };
-        if (['btn-style', 'btn-hover', 'bg-style'].includes(name)) {
+        if (['btn-style', 'btn::hover', 'bg-style'].includes(name)) {
             this.updateStyles();
         };
     };
@@ -58,7 +58,7 @@ class NewsLetter extends HTMLElement {
     updateStyles() {
         this.$dynamicStyle.textContent = NewsLetter.dynamicStyles(
             this.getAttribute('btn-style') || '', 
-            this.getAttribute('btn-hover') || '',
+            this.getAttribute('btn::hover') || '',
             this.getAttribute('bg-style') || ''
         );
     };
@@ -99,7 +99,7 @@ class NewsLetter extends HTMLElement {
             }
             .newsletter__enviar {
                 inline-size: 100%;
-                padding: 0.75rem 0.5rem;
+                padding: 1rem;
                 cursor: pointer;
                 border: none;
                 border-radius: 8px;

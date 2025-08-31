@@ -26,22 +26,24 @@
           "./assets/images/illustration-sign-up-tablet.svg", 
           "./assets/images/illustration-sign-up-mobile.svg"
         ]'
-        btn-style="background-color: yellow;"
-        btn::hover="background-color: orange;"
+        btn-style="background-color: hsl(234, 29%, 20%); color: white; font-weight: 700; font-size: 14px;"
+        btn::hover="background-image: linear-gradient(45deg, rgb(255, 83, 119), rgb(255, 105, 62)); box-shadow: 0px 15px 30px rgba(255, 66, 66, .5);"
         btn-label="Subscribe to monthly newsletter"
       >
-        <h1 slot="contenido">Stay update!</h1>
-        <p slot="contenido">
+        <h1 slot="contenido" class="title">Stay update!</h1>
+        <p slot="contenido" class="parrafo">
           join 60,000+ product managers receiving monthly updates on:
         </p>
-        <ul slot="contenido">
-          <li>Product discovery and building whats matters</li>
+        <ul slot="contenido" class="lista">
+          <li>Product discovery and building what matters</li>
           <li>Measuring to ensure updates are a success</li>
           <li>And much more!</li>
         </ul>
       </news-letter>
-      <p>Asi se ve el componente personalizado ☝️.</p>
-      <p>👇 Y asi se ve por defecto.</p>
+      <div class="info">
+        <p>Asi se ve el componente personalizado ☝️.</p>
+        <p>👇 Y asi se ve por defecto.</p>
+      </div>
       <news-letter></news-letter>
     </main>
     <!-- Success message start -->
