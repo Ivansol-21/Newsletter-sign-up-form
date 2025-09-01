@@ -17,7 +17,7 @@
 #app {
     display: grid;
     grid-template-columns: 100dvw;
-    grid-template-rows: 100dvh auto 100dvh;
+    grid-template-rows: 100dvh auto 100dvh 100vh;
     place-items: center;
     min-block-size: 100dvh;
     background-color: var(--Blue-800);
@@ -49,6 +49,16 @@
 }
 .lista li::before {
     content: url('./assets/images/icon-list.svg');
+}
+.success-description {
+    color: var(--Blue-700);
+    font-size: 0.925rem;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+}
+.dato {
+    color: var(--Blue-800);
+    font-weight: 700;
 }
 @media screen and (max-width: 768px) {
     .title {

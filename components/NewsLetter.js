@@ -1,6 +1,6 @@
 class NewsLetter extends HTMLElement {
     static get observedAttributes () {
-        return ['input', 'portada', 'btn-label', 'btn-style', 'btn::hover', 'sp'];
+        return ['input', 'portada', 'btn-label', 'btn-style', 'btn::hover', 'style-p'];
     };
     constructor () {
         super();
@@ -44,7 +44,7 @@ class NewsLetter extends HTMLElement {
                 this.$boton.textContent = nV || 'Enviar';
                 break;
         };
-        if (['btn-style', 'btn::hover', 'bg-style'].includes(name)) {
+        if (['btn-style', 'btn::hover', 'style-p'].includes(name)) {
             this.updateStyles();
         };
     };
@@ -59,7 +59,7 @@ class NewsLetter extends HTMLElement {
         this.$dynamicStyle.textContent = NewsLetter.dynamicStyles(
             this.getAttribute('btn-style') || '', 
             this.getAttribute('btn::hover') || '',
-            this.getAttribute('bg-style') || ''
+            this.getAttribute('style-p') || ''
         );
     };
     static baseStyles() {
@@ -135,14 +135,14 @@ class NewsLetter extends HTMLElement {
             }
         `
     }
-    static dynamicStyles(btnStyle, btnHover, sp) {
+    static dynamicStyles(btnStyle, btnHover, stp) {
         let css = '';
         // Verificamos si se ha definido algún estilo para el botón
         if (btnStyle) css += `.newsletter__enviar { ${btnStyle} } `;
         // Si se define el estilo para el hover
         if(btnHover) css += `.newsletter__enviar:hover { ${btnHover} }`;
         // Si se define el estilo para el fondo
-        if(sp) css += `.sp { ${sp} }`;
+        if(stp) css += `.newsletter--stp { ${stp} }`;
         // retornamas la css con los estilos que se hayan agregando.
         return css;
     };
@@ -160,7 +160,14 @@ class NewsLetter extends HTMLElement {
 
     enviar(e) {
         e.preventDefault();
-        console.log('eviado');
+        const esValido = this.$formField.validar();
+        if (esValido) {
+            this.dispatchEvent(new CustomEvent('FormSubmited', {
+                detail: { valor: this.$formField.valor },
+                bubbles: true,
+                composed: true
+            }));
+        }
     };
 /* -------------------------------------------------------- */
     get input() {
@@ -190,7 +197,7 @@ NewsLetter.template = document.createElement('template');
 NewsLetter.template.innerHTML = /* html */ `
     <style>${NewsLetter.baseStyles()}</style>
     <style id="dynamic-styles"></style>
-    <article class="newsletter sp">
+    <article class="newsletter newsletter--stp">
         <section>
             <slot name="contenido"></slot>
             <form class="newsletter__form">

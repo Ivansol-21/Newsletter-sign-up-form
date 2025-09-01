@@ -20,7 +20,8 @@
   <body>
     <main id="app">
       <news-letter
-        input='{"type": "email", "label": "Email address", "name": "email", "required": ""}'
+        id="componenteNL"
+        input='{"type": "email", "label": "Email address", "name": "email"}'
         portada='[
           "./assets/images/illustration-sign-up-desktop.svg", 
           "./assets/images/illustration-sign-up-tablet.svg", 
@@ -40,11 +41,15 @@
           <li>And much more!</li>
         </ul>
       </news-letter>
+      <!-- -------------------------------------------------------- -->
       <div class="info">
-        <p>Asi se ve el componente personalizado ☝️.</p>
-        <p>👇 Y asi se ve por defecto.</p>
+        <p>Asi se ven los componentes personalizados ☝️.</p>
+        <p>👇 Y asi se ven por defecto.</p>
       </div>
+      <!-- -------------------------------------------------------- -->
       <news-letter></news-letter>
+      <!-- -------------------------------------------------------- -->
+      <success-message> </success-message>
     </main>
     <!-- Success message start -->
 

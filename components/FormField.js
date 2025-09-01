@@ -110,7 +110,7 @@ class FormField extends HTMLElement {
 
     validar() {
         const valor = this.$input.value.trim();
-        if (this.hasAttribute('required') && !valor) {
+        if (this.hasAttribute('required') && !valor || this.$input.getAttribute('type') === 'email' && !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(valor)) {
             this.$error.textContent = `Valid ${this.$input.name} required`;
             this.$input.style.border = 'solid 1px hsl(0, 100%, 74%)';
             this.$input.style.backgroundColor = 'hsl(0, 100%, 95%)';
